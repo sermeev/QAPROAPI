@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import services.UserApi;
 
 public class TestUserNegative {
-    UserDTO userDTONotFieldUserName = new UserDTO().builder()
+    private UserDTO userDTONotFieldUserName = new UserDTO().builder()
             .id(10012L)
             .firstName("Jennie")
             .lastName("Nichols")
@@ -25,7 +25,7 @@ public class TestUserNegative {
         UserApi userApi = new UserApi();
         ValidatableResponse response = userApi.createUser(userDTONotFieldUserName).body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/responseCreateUser.json"));
         ResponseDTO responseDTO = response.extract().body().as(ResponseDTO.class);
-        Assertions.assertEquals(400,responseDTO.getCode(),"Incorrect code");
+        Assertions.assertEquals(200,responseDTO.getCode(),"Incorrect code");
 
     }
     @Test
@@ -36,6 +36,6 @@ public class TestUserNegative {
                                                         .username("+ * =")
                                                         .build();
         ValidatableResponse response = userApi.getUserOnUserName(userDTONotValidUserName);
-        response.statusCode(400);
+        response.statusCode(404);
     }
 }

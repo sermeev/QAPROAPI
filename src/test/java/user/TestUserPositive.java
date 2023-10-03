@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import services.UserApi;
 
 public class TestUserPositive {
-    UserDTO userDTOAllFields = new UserDTO().builder()
+    private UserDTO userDTOAllFields = new UserDTO().builder()
             .id(10011L)
             .username("yaroslava1961")
             .firstName("Ярослава")
