@@ -10,7 +10,7 @@ timeout(60){
                 script:" mvn test -DBase.uri=${BASE_URL}"
             )
             if(exitCode==1){
-                currentBild.result = 'UNSTABLE'
+                currentBuild.result = 'UNSTABLE'
             }
         }
         stage("Allure report"){
