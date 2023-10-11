@@ -36,6 +36,15 @@ public class UserApi {
                 .log().all();
     }
 
+    public ValidatableResponse deleteUser(UserDTO userDTO){
+        return given(requestSpecification)
+                .basePath(BASE_PATH+"/"+userDTO.getUsername())
+                .when()
+                .delete()
+                .then()
+                .log().all();
+    }
+
     public ValidatableResponse getUserOnUserName(UserDTO userDTO){
         return given(requestSpecification)
                 .basePath(BASE_PATH+"/"+userDTO.getUsername())

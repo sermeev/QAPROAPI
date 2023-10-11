@@ -4,10 +4,7 @@ import dto.UserDTO;
 import dto.ResponseDTO;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.module.jsv.JsonSchemaValidator;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import services.UserApi;
 
 public class TestUserPositive {
@@ -44,14 +41,25 @@ public class TestUserPositive {
     @Test
     @DisplayName("Проверка входа в систему пользователем")
     public  void testLoginUser(){
-
-        ValidatableResponse response = userApi.loginUser(userDTOAllFields).body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/responseCreateUser.json"));
+        ValidatableResponse response = userApi.createUser(userDTOAllFields).body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/responseCreateUser.json"));
         ResponseDTO responseDTO = response.extract().body().as(ResponseDTO.class);
         Assertions.assertAll("Response",
                 ()->Assertions.assertEquals(200,responseDTO.getCode(),"Incorrect code"),
                 ()->Assertions.assertEquals("unknown",responseDTO.getType(),"Incorrect type"),
-                ()->Assertions.assertTrue(responseDTO.getMessage().contains("logged in user session:"))
+                ()->Assertions.assertEquals("10011",responseDTO.getMessage(),"Incorrect message")
+        );
+        response = userApi.loginUser(userDTOAllFields).body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/responseCreateUser.json"));
+        ResponseDTO responseDTO2= response.extract().body().as(ResponseDTO.class);
+        Assertions.assertAll("Response",
+                ()->Assertions.assertEquals(200,responseDTO2.getCode(),"Incorrect code"),
+                ()->Assertions.assertEquals("unknown",responseDTO2.getType(),"Incorrect type"),
+                ()->Assertions.assertTrue(responseDTO2.getMessage().contains("logged in user session:"))
         );
 
+    }
+    @AfterEach
+    public void deleteUser(){
+        ValidatableResponse response = userApi.deleteUser(userDTOAllFields);
+        response.assertThat().statusCode(200);
     }
 }

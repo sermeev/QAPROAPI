@@ -27,7 +27,6 @@ public class TestUserNegative {
         ValidatableResponse response = userApi.createUser(userDTONotFieldUserName).body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/responseCreateUser.json"));
         ResponseDTO responseDTO = response.extract().body().as(ResponseDTO.class);
         Assertions.assertEquals(200,responseDTO.getCode(),"Incorrect code");
-
     }
     @Test
     @DisplayName("Получение пользователя по невалидной имени")
