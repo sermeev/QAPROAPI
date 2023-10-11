@@ -1,6 +1,6 @@
 timeout(60){
     node("maven"){
-        currentBuil.description= "BRANCH=${BRANCH}\nBASE_URL=${BASE_URL}"
+        currentBuild.description= "BRANCH=${BRANCH}\nBASE_URL=${BASE_URL}"
         stage("Checkout") {
             checkout scm
         }
