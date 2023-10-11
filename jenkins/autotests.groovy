@@ -7,7 +7,7 @@ timeout(60){
         stage("Running tests"){
             def exitCode = sh (
                 returnStatus:true,
-                script:" mvn test -DBase.url=${BASE_URL}"
+                script:" mvn test -DBase.uri=${BASE_URL}"
             )
             if(exitCode==1){
                 currentBild.result = 'UNSTABLE'
@@ -19,7 +19,7 @@ timeout(60){
                     jdk:'',
                     properties:[],
                     reportBuildPolicy:'ALWAYS',
-                    results:[[path:'./target/allure-results']]
+                    results:[[path:'allure-results']]
             ])
         }
     }
