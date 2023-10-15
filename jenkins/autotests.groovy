@@ -1,13 +1,13 @@
 timeout(60){
     node("maven"){
-        currentBuild.description= "BRANCH=${BRANCH}\nBASE_URL=${BASE_URL}"
+        currentBuild.description= "BRANCH=${BRANCH}\nBASE_URL=${BASE_URI}"
         stage("Checkout") {
             checkout scm
         }
         stage("Running tests"){
             def exitCode = sh (
                 returnStatus:true,
-                script:" mvn test -DBase.uri=${BASE_URL}"
+                script:" mvn test -DBase.uri=${BASE_URI}"
             )
             if(exitCode==1){
                 currentBuild.result = 'UNSTABLE'
